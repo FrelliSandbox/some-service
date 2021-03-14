@@ -30,7 +30,7 @@ jobs:
           java-version: 11
 
       - name: Compile
-        run: mvn -B -U clean compile -DskipTests
+        run: mvn -X -B -U clean compile -DskipTests
 
       - name: Verify
         run: mvn -B clean verify
