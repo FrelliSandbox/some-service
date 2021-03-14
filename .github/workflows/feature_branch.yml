@@ -38,4 +38,4 @@ jobs:
         run: mvn -B verify
 
       - name: Docker Build
-        run: mvn spring-boot:build-image -Dspring-boot.build-image.imageName=some-service
+        run: mvn spring-boot:build-image -Dspring-boot.build-image.imageName=${GITHUB_REPOSITORY}
