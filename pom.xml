@@ -25,8 +25,8 @@
 
     <repositories>
         <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/FrelliSandbox</url>
+            <id>some-library</id>
+            <url>https://maven.pkg.github.com/FrelliSandbox/some-library</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
