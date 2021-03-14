@@ -30,7 +30,7 @@
         </repository>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/FrelliSandbox/some-library</url>
+            <url>https://maven.pkg.github.com/FrelliSandbox/*</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
