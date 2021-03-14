@@ -12,11 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - uses: actions-ecosystem/action-get-latest-tag@v1
-        id: get-latest-tag
-        with:
-          semver_only: true
-
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -24,23 +19,27 @@ jobs:
 
       - name: Compile
         run: mvn -B clean compile -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verify
-        run: mvn -B clean verify
+        run: mvn -B verify
+
+      - name: Get Latest Tag
+        id: get-latest-tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        with:
+          semver_only: true
 
       # currently hardcoding the semver increment to patch
       # there are a handful of ways to determine this, PR labels, commit message parsing or just keep it always manual
-      - uses: actions-ecosystem/action-bump-semver@v1
+      - name: Bump Version
         id: bump-semver
+        uses: actions-ecosystem/action-bump-semver@v1
         if: ${{ steps.get-latest-tag.outputs.tag != null }}
         with:
           current_version: ${{ steps.get-latest-tag.outputs.tag }}
           level: patch
-
-      - name: Publish Main Artifacts
-        run: mvn -B deploy -Drevision=${{ steps.bump-semver.outputs.new_version }} -DskipTests
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tag & Release
         uses: softprops/action-gh-release@v1
