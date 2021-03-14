@@ -41,4 +41,4 @@ jobs:
       - name: Docker Build
         run: |
           mvn -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=${{ github.event.repository.name }}
-          docker image
+          docker image ls
