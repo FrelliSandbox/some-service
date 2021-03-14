@@ -36,3 +36,6 @@ jobs:
 
       - name: Verify
         run: mvn -B verify
+
+      - name: Docker Build
+        run: mvn spring-boot:build-image -Dspring-boot.build-image.imageName=ghcr.io/${{ env.GITHUB_REPOSITORY }}
