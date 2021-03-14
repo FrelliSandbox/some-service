@@ -25,15 +25,15 @@
 
     <repositories>
         <repository>
-            <id>some-library</id>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <id>github</id>
             <url>https://maven.pkg.github.com/FrelliSandbox/some-library</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>central</id>
-            <url>https://repo1.maven.org/maven2</url>
         </repository>
     </repositories>
 
