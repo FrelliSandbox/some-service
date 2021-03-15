@@ -41,6 +41,15 @@ jobs:
           current_version: ${{ steps.get-latest-tag.outputs.tag }}
           level: patch
 
+      - name: Docker Build & Push
+        run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          IMAGE_VERSION=$(echo ${{ steps.bump-semver.outputs.new_version }} | cut -c 2-)
+          IMAGE_NAME=$(echo ghcr.io/${{ github.repository }}:${IMAGE_VERSION} | awk '{print tolower($0)}')
+          echo ${IMAGE_NAME}
+          mvn -B spring-boot:build-image -DskipTests -Drevision=${IMAGE_VERSION} -Dspring-boot.build-image.imageName=${IMAGE_NAME}
+          docker push ${IMAGE_NAME}
+
       - name: Tag & Release
         uses: softprops/action-gh-release@v1
         with:
