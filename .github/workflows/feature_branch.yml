@@ -38,7 +38,10 @@ jobs:
       - name: Verify
         run: mvn -B verify
 
-      - name: Docker Build
+      - name: Docker Build & Push
         run: |
-          mvn -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=${{ github.event.repository.name }}
-          docker image ls
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          IMAGE_NAME=$(echo ghcr.io/${{ github.repository }}:${{ env.project_version }} | awk '{print tolower($0)}')
+          echo ${IMAGE_NAME}
+          mvn -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=${IMAGE_NAME}
+          docker push ${IMAGE_NAME}
