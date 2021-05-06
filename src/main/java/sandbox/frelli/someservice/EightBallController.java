@@ -9,7 +9,7 @@ public class EightBallController {
 
     private final SomeUtility someUtility = new SomeUtility();
 
-    @GetMapping("/8ball")
+    @GetMapping("/9ball")
     public String eightBall() {
         return someUtility.magicEightBall();
     }
