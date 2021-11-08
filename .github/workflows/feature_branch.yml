@@ -6,7 +6,7 @@ on:
 
 jobs:
   main:
-    name: Feature Branch CI Pipeline
+    name: Feature Branch CI
     runs-on: ubuntu-latest
     steps:
 
