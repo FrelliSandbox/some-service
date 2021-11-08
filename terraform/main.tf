@@ -6,6 +6,13 @@ terraform {
     }
   }
 
+  backend "s3" {
+    region = "eu-west-1"
+    profile = "terraform-user"
+    bucket = "frellisandbox-terraform-state"
+    key = "some-service.tfstate"
+  }
+
   required_version = ">= 0.14.9"
 }
 
