@@ -45,3 +45,10 @@ jobs:
           echo ${IMAGE_NAME}
           mvn -B spring-boot:build-image -DskipTests -Drevision=${{ env.project_version }}-SNAPSHOT -Dspring-boot.build-image.imageName=${IMAGE_NAME}
           docker push ${IMAGE_NAME}
+
+      - name: Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Plan
+        run: |
+          terraform plan -no-color
