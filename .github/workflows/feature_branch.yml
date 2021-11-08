@@ -51,5 +51,6 @@ jobs:
 
       - name: Terraform
         run: |
+          cd .terraform
           terraform init
           terraform plan -no-color
