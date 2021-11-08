@@ -55,4 +55,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           terraform -chdir=terraform init
-          terraform -chdir=terraform plan -no-color
+          terraform -chdir=terraform plan
