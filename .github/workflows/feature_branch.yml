@@ -6,7 +6,7 @@ on:
 
 jobs:
   main:
-    name: Feature Branch CI Pipeline
+    name: Feature Branch CI
     runs-on: ubuntu-latest
     steps:
 
@@ -45,3 +45,24 @@ jobs:
           echo ${IMAGE_NAME}
           mvn -B spring-boot:build-image -DskipTests -Drevision=${{ env.project_version }}-SNAPSHOT -Dspring-boot.build-image.imageName=${IMAGE_NAME}
           docker push ${IMAGE_NAME}
+
+
+  terraform:
+    name: Run Terraform
+    runs-on: ubuntu-latest
+    environment: dev
+    needs: [ main ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Run Terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          terraform -chdir=terraform init
+          terraform -chdir=terraform plan
